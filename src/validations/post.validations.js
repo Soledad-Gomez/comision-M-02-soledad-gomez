@@ -1,12 +1,12 @@
 import { body, param } from "express-validator";
 
-export const creatPostvalidation = [
+export const createPostvalidation = [
   body("title")
     .notEmpty()
     .withMessage("Debes agregar un título")
     .isString()
     .withMessage("El título debe ser un string"),
-  body("description").notEmpty().withMessage("Debes agregar una descripción"),
+  body("desc").notEmpty().withMessage("Debes agregar una descripción"),
   body("image")
     .notEmpty()
     .withMessage("Debes agregar una imágen")
@@ -21,13 +21,9 @@ export const listPostValidations = [
 ];
 */
 
-export const findPostValidation = [param("postId").isNumeric().toInt()];
+export const findPostValidation = [param("postId")];
 
 export const updatePostvalidation = [
-  param("postId")
-    .isNumeric()
-    .withMessage("El id debe ser un número válido")
-    .toInt(),
   body("title")
     .optional()
     .notEmpty()

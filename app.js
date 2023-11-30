@@ -22,8 +22,7 @@ app.use(helmet());
 app.use(cors());
 
 //rutas
-app.use("/api/posts", postRouter);
-//app.use("/api/products", productRouter);
+app.use("/posts", postRouter);
 
 app.listen(env.PORT, async () => {
   await startConnection();

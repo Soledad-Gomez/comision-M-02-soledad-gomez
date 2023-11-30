@@ -1,5 +1,17 @@
 import { Router } from "express";
-import { ctrlGetAllPost } from "../controllers/post.controllers.js";
+import {
+  ctrlCreatePost,
+  ctrlDeletePostById,
+  ctrlGetAllPost,
+  ctrlGetPostById,
+  ctrlUpdatePostById,
+} from "../controllers/post.controllers.js";
+import {
+  createPostvalidation,
+  findPostValidation,
+  updatePostvalidation,
+} from "../validations/post.validations.js";
+import { applyValidations } from "../middlewares/apply.validations.js";
 
 const postRouter = Router();
 
@@ -7,12 +19,22 @@ const postRouter = Router();
 postRouter.get("/", ctrlGetAllPost);
 
 //create a new product
-postRouter.post("/", ctrlGetAllPost);
+postRouter.post("/", createPostvalidation, applyValidations, ctrlCreatePost);
 
 //get one, update and delete a product
-postRouter.get("/:productId", ctrlGetAllPost);
-postRouter.put("/:productId", ctrlGetAllPost);
-postRouter.delete("/:productId", ctrlGetAllPost);
+postRouter.get(
+  "/:postId",
+  findPostValidation,
+  applyValidations,
+  ctrlGetPostById
+);
+postRouter.patch(
+  "/:postId",
+  updatePostvalidation,
+  applyValidations,
+  ctrlUpdatePostById
+);
+postRouter.delete("/:postId", ctrlDeletePostById);
 
 export { postRouter };
 
