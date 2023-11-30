@@ -13,9 +13,9 @@ const PostSchema = new Schema({
     required: true,
   },
   author: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: "User",
     required: true,
-    //referencia a user
   },
   comments: {},
   imageURL: {
@@ -23,8 +23,7 @@ const PostSchema = new Schema({
     required: true,
   },
   CreatedAt: {
-    type: Date,
-    required: true,
+    //timestamps: true,
   },
 });
 
