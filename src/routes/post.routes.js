@@ -15,43 +15,29 @@ import { applyValidations } from "../middlewares/apply.validations.js";
 
 const postRouter = Router();
 
-//get all products
+//ruta para ver todos lo posts
 postRouter.get("/", ctrlGetAllPost);
 
-//create a new product
+//ruta para crear un nuevo post
 postRouter.post("/", createPostvalidation, applyValidations, ctrlCreatePost);
 
-//get one, update and delete a product
+//ruta para ver un post buscandolo por su Id
 postRouter.get(
   "/:postId",
   findPostValidation,
   applyValidations,
   ctrlGetPostById
 );
+
+//ruta para editar un post buscandolo por su Id
 postRouter.patch(
   "/:postId",
   updatePostvalidation,
   applyValidations,
   ctrlUpdatePostById
 );
+
+//ruta para borrar un post buscandolo por su Id
 postRouter.delete("/:postId", ctrlDeletePostById);
 
 export { postRouter };
-
-//viene del otro archivo
-/*
-import { ctrlLogin, ctrlRegister } from "../controllers/user.controllers.js";
-import { registerUserValidation } from "../../validations/register.user.validation.js";
-import { applyValidations } from "../middlewares/apply.validations.js";
-
-const userRouter = Router();
-
-userRouter.post(
-  "/register",
-  registerUserValidation,
-  applyValidations,
-  ctrlRegister
-);
-userRouter.post("/login", ctrlLogin);
-
-export { userRouter };*/

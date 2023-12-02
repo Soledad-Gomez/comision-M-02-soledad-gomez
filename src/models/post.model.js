@@ -23,7 +23,7 @@ const PostSchema = new Schema(
       required: true,
     },
   },
-  { public: false, timestamps: true }
+  { public: true, timestamps: true }
 );
 
 export const PostModel = model("Post", PostSchema);

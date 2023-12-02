@@ -15,7 +15,12 @@ export const ctrlCreatePost = async (req, res) => {
 //controlador para traer todos los posts
 export const ctrlGetAllPost = async (req, res) => {
   try {
-    const allPost = await PostModel.find({ public: true }, "-__v");
+    const allPost = await PostModel.find(
+      {
+        /*public: true*/
+      },
+      "-__v"
+    );
     if (allPost.length < 1) return res.sendStatus(204);
     res.json(allPost);
   } catch (error) {
@@ -58,7 +63,7 @@ export const ctrlUpdatePostById = async (req, res) => {
 export const ctrlDeletePostById = async (req, res) => {
   const { postId } = req.params;
   try {
-    await PostModel.findOneAndDelete({ _id: postId }, req.body);
+    await PostModel.findOneAndDelete({ _id: postId });
     res.sendStatus(202);
   } catch (error) {
     console.log(error);

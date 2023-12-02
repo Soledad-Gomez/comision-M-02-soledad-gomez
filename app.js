@@ -10,7 +10,7 @@ import { env } from "./src/settings/config.js";
 
 //rutas
 import { postRouter } from "./src/routes/post.routes.js";
-//import {productRouter} from ".src/routes/product.router.js"
+import { userRouter } from "./src/routes/user.routes.js";
 
 const app = express();
 
@@ -23,6 +23,7 @@ app.use(cors());
 
 //rutas
 app.use("/posts", postRouter);
+app.use("/users", userRouter);
 
 app.listen(env.PORT, async () => {
   await startConnection();
