@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import {
   ctrlCreatePost,
   ctrlDeletePostById,
@@ -6,20 +7,22 @@ import {
   ctrlGetPostById,
   ctrlUpdatePostById,
 } from "../controllers/post.controllers.js";
+
 import {
   createPostvalidation,
   findPostValidation,
   updatePostvalidation,
 } from "../validations/post.validations.js";
+
 import { applyValidations } from "../middlewares/apply.validations.js";
 
 const postRouter = Router();
 
-//ruta para ver todos lo posts
-postRouter.get("/", ctrlGetAllPost);
-
 //ruta para crear un nuevo post
 postRouter.post("/", createPostvalidation, applyValidations, ctrlCreatePost);
+
+//ruta para ver todos lo posts
+postRouter.get("/", ctrlGetAllPost);
 
 //ruta para ver un post buscandolo por su Id
 postRouter.get(

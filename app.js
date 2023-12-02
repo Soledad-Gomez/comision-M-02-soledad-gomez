@@ -11,6 +11,7 @@ import { env } from "./src/settings/config.js";
 //rutas
 import { postRouter } from "./src/routes/post.routes.js";
 import { userRouter } from "./src/routes/user.routes.js";
+import { commentRouter } from "./src/routes/comments.routes.js";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(cors());
 //rutas
 app.use("/posts", postRouter);
 app.use("/users", userRouter);
+app.use("/comments", commentRouter);
 
 app.listen(env.PORT, async () => {
   await startConnection();

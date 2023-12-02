@@ -34,7 +34,7 @@ export const ctrlFindOneUser = async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     console.log(error);
-    res.sendStatus(500);
+    res.sendStatus(404);
   }
 };
 

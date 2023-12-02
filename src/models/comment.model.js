@@ -5,11 +5,16 @@ const CommentSchema = new Schema({
     type: String,
     ref: "User",
   },
-  description: {
+  desc: {
     type: String,
     required: true,
-    maxLength: 200,
   },
+  post: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Post",
+    },
+  ],
 });
 
 export const CommentModel = model("comments", CommentSchema);

@@ -4,7 +4,6 @@ import { PostModel } from "../models/post.model.js";
 export const ctrlCreatePost = async (req, res) => {
   try {
     const newPost = await PostModel.create(req.body);
-
     res.status(201).json(newPost);
   } catch (error) {
     console.log(error);
@@ -22,6 +21,7 @@ export const ctrlGetAllPost = async (req, res) => {
       "-__v"
     );
     if (allPost.length < 1) return res.sendStatus(204);
+
     res.json(allPost);
   } catch (error) {
     console.log(error);
@@ -35,6 +35,7 @@ export const ctrlGetPostById = async (req, res) => {
 
   try {
     const post = await PostModel.findOne({ _id: postId }, "-__v");
+
     if (!post) return res.sendStatus(404);
     res.json(post);
   } catch (error) {
@@ -46,12 +47,14 @@ export const ctrlGetPostById = async (req, res) => {
 //controlador para actualizar un post
 export const ctrlUpdatePostById = async (req, res) => {
   const { postId } = req.params;
+
   try {
     const updatedPost = await PostModel.findOneAndUpdate(
       { _id: postId },
       req.body,
       { new: true }
     );
+
     res.json(updatedPost);
   } catch (error) {
     console.log(error);
@@ -62,6 +65,7 @@ export const ctrlUpdatePostById = async (req, res) => {
 //controlador para borrar un post
 export const ctrlDeletePostById = async (req, res) => {
   const { postId } = req.params;
+
   try {
     await PostModel.findOneAndDelete({ _id: postId });
     res.sendStatus(202);

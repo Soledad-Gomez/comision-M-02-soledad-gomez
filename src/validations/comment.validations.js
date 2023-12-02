@@ -1,9 +1,16 @@
 import { body } from "express-validator";
 
-export const createComment = [
-  body("author").notEmpty().withmessage("Debes indicar el autor").isString(),
-  body("description")
+export const createCommentValidation = [
+  body("desc")
     .notEmpty()
-    .withmessage("Debes escribir una descripción")
+    .withMessage("Debes escribir un comentario")
+    .isString(),
+];
+
+export const updateCommentValidation = [
+  body("desc")
+    .optional()
+    .notEmpty()
+    .withMessage("Debes escribir un comentario")
     .isString(),
 ];
