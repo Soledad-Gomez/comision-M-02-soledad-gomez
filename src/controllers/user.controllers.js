@@ -1,5 +1,5 @@
 import { UserModel } from "../models/user.model.js";
-import jwt from "jsonwebtoken";
+import { createJWT } from "../utils/jwt.js";
 import bcrypt from "bcrypt";
 
 //controlador para registrar un usuario
@@ -9,7 +9,7 @@ export const ctrlRegister = async (req, res) => {
     res.status(201).json(newUser);
   } catch (error) {
     console.log(error);
-    res.sendStatus(500);
+    res.sendStatus(500).json({ error: "No se pudo crear el usuario" });
   }
 };
 
@@ -28,7 +28,7 @@ export const ctrlGetAllUsers = async (req, res) => {
 export const ctrlFindOneUser = async (req, res) => {
   const { userId } = req.params;
   try {
-    const user = await UserModel.findOne({ _id: userId });
+    const user = await UserModel.findOne({ _id: userId }).populate("username");
     if (!user) return res.sendStatus(404);
 
     res.status(200).json(user);
@@ -38,32 +38,18 @@ export const ctrlFindOneUser = async (req, res) => {
   }
 };
 
-//controlador para actualizar un usuario
-export const ctrlUpdateUser = async (req, res) => {
-  const { userId } = req.params;
+//controlador para Ingresar a la cuenta
+export const ctrlLogin = async (req, res) => {
   try {
-    const updateUser = await UserModel.findOneAndUpdate(
-      { _id: userId },
-      req.body,
-      {
-        new: true,
-      }
-    );
-    res.json(updateUser);
+    const { email, password } = req.body;
+    const user = await UserModel.findOne({ email });
+    if (!user) return res.status(404).json({ error: "Usuario no encontrado" });
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch)
+      return res.status(400).json({ error: "Credenciales inválidas" });
+    const token = await createJWT({ userId: user._id });
+    res.status(200).json({ token, user });
   } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
-  }
-};
-
-//controlador para eliminar un usuario
-export const ctrlDeleteUser = async (req, res) => {
-  const { userId } = req.params;
-  try {
-    await UserModel.findOneAndDelete({ _id: userId });
-    res.sendStatus(202);
-  } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
+    res.status(500).json({ error: "No se puede ingresar a la cuenta" });
   }
 };

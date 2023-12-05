@@ -1,37 +1,34 @@
 import { Router } from "express";
 
 import {
-  ctrlDeleteUser,
   ctrlFindOneUser,
   ctrlGetAllUsers,
+  ctrlLogin,
   ctrlRegister,
-  ctrlUpdateUser,
 } from "../controllers/user.controllers.js";
 import {
+  loginUserValidation,
   registerUserValidation,
-  updateUserValidation,
 } from "../validations/user.validations.js";
 import { applyValidations } from "../middlewares/apply.validations.js";
 
 const userRouter = Router();
 
 //ruta para crear un usuario
-userRouter.post("/", registerUserValidation, applyValidations, ctrlRegister);
+userRouter.post(
+  "/register",
+  registerUserValidation,
+  applyValidations,
+  ctrlRegister
+);
+
+//ruta para ingresar a la cuenta de usuario
+userRouter.post("/login", loginUserValidation, applyValidations, ctrlLogin);
 
 //ruta para traer todos los usuarios
 userRouter.get("/", ctrlGetAllUsers);
 
+//ruta para buscar un usuario
 userRouter.get("/:userId", ctrlFindOneUser);
-
-//ruta para actualizar un usuario
-userRouter.patch(
-  "/:userId",
-  updateUserValidation,
-  applyValidations,
-  ctrlUpdateUser
-);
-
-//ruta para eliminar un usuario
-userRouter.delete("/:userId", ctrlDeleteUser);
 
 export { userRouter };

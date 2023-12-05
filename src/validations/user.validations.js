@@ -1,55 +1,58 @@
 import { body, param } from "express-validator";
+import { UserModel } from "../models/user.model.js";
 
 export const registerUserValidation = [
-  body("username").notEmpty().withMessage("Este campo no debe estar vacío"),
-  body("email")
-    .notEmpty()
-    .withMessage("Este campo no debe estar vacío")
-    .isEmail()
-    .withMessage("debes escribir un correo válido"),
-  body("password")
-    .notEmpty()
-    .withMessage("Debes escribir una contraseña")
-    .isLength({ min: 8, max: 12 })
-    .withMessage(
-      "La contraseña debe tener al menos 8 caracteres y 12 como máximo"
-    ),
-  body("avatar")
-    .notEmpty()
-    .withMessage("El campo { avatar } no debe estar vacio.")
-    .isString()
-    .withMessage("El campo { avatar } debe ser un string.")
-    .isURL()
-    .withMessage("El campo { avatar } debe ser una URL válida."),
-];
-
-export const updateUserValidation = [
   body("username")
-    .optional()
     .notEmpty()
-    .withMessage("Este campo no debe estar vacío"),
+    .withMessage("Este campo no debe estar vacío")
+    .custom(async (value) => {
+      const user = await UserModel.findOne({ username: value });
+
+      if (user) throw new Error("Este usuario ya está registrado");
+
+      return true;
+    }),
   body("email")
-    .optional()
     .notEmpty()
     .withMessage("Este campo no debe estar vacío")
     .isEmail()
-    .withMessage("debes escribir un correo válido"),
+    .withMessage("debes escribir un correo válido")
+    .custom(async (value) => {
+      const user = await UserModel.findOne({ email: value });
+
+      if (user) throw new Error("Este email ya está registrado");
+
+      return true;
+    }),
   body("password")
-    .optional()
     .notEmpty()
     .withMessage("Debes escribir una contraseña")
     .isLength({ min: 8, max: 12 })
     .withMessage(
       "La contraseña debe tener al menos 8 caracteres y 12 como máximo"
-    ),
-  body("avatar")
-    .optional()
-    .notEmpty()
-    .withMessage("El campo { avatar } no debe estar vacio.")
+    )
     .isString()
-    .withMessage("El campo { avatar } debe ser un string.")
+    .withMessage("La contraseña debe ser un string")
+    .trim()
+    .withMessage("No debe haber espacios"),
+  body("avatar")
+    .notEmpty()
+    .withMessage("Este campo no debe estar vacio.")
+    .isString()
+    .withMessage("Debe ser un string.")
     .isURL()
-    .withMessage("El campo { avatar } debe ser una URL válida."),
+    .withMessage("Debe ser una URL válida."),
 ];
 
-export const loginUserValidation = [body("email"), body("password")];
+export const loginUserValidation = [
+  body("email")
+    .notEmpty()
+    .withMessage("Este campo no debe estar vacío")
+    .isEmail()
+    .withMessage("Debes escribir un email válido"),
+  body("password")
+    .notEmpty()
+    .withMessage("Este campo no debe estar vacío")
+    .isString()
+    .withMessage("Debe ser un string"),
+];

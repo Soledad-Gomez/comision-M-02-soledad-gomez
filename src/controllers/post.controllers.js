@@ -1,10 +1,19 @@
+import { CommentModel } from "../models/comment.model.js";
 import { PostModel } from "../models/post.model.js";
 
 //controlador para crear un post
 export const ctrlCreatePost = async (req, res) => {
+  const userId = req.user._id;
   try {
-    const newPost = await PostModel.create(req.body);
-    res.status(201).json(newPost);
+    const { title, desc, image } = req.body;
+    const post = new PostModel({
+      title,
+      desc,
+      image,
+      author: userId,
+    });
+    await post.save();
+    res.status(201).json(post);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
@@ -14,12 +23,10 @@ export const ctrlCreatePost = async (req, res) => {
 //controlador para traer todos los posts
 export const ctrlGetAllPost = async (req, res) => {
   try {
-    const allPost = await PostModel.find(
-      {
-        /*public: true*/
-      },
-      "-__v"
-    );
+    const allPost = await PostModel.find().populate("comments", [
+      "desc",
+      "author",
+    ]);
     if (allPost.length < 1) return res.sendStatus(204);
 
     res.json(allPost);
@@ -34,7 +41,9 @@ export const ctrlGetPostById = async (req, res) => {
   const { postId } = req.params;
 
   try {
-    const post = await PostModel.findOne({ _id: postId }, "-__v");
+    const post = await PostModel.findOne({ _id: postId })
+      .populate("comments", ["desc", "author"])
+      .populate("author", ["username", "avatar"]);
 
     if (!post) return res.sendStatus(404);
     res.json(post);
@@ -67,7 +76,16 @@ export const ctrlDeletePostById = async (req, res) => {
   const { postId } = req.params;
 
   try {
-    await PostModel.findOneAndDelete({ _id: postId });
+    const post = await PostModel.findOne({ _id: postId });
+    if (!post) {
+      return res.status(404).json({ error: "Post no encontrado" });
+    }
+    await CommentModel.deleteMany({ _id: { $in: post.comments } });
+
+    await PostModel.findOneAndDelete({
+      _id: postId,
+    });
+
     res.sendStatus(202);
   } catch (error) {
     console.log(error);

@@ -1,4 +1,5 @@
 import { body, param } from "express-validator";
+import { isValidObjectId } from "mongoose";
 
 export const createPostvalidation = [
   body("title")
@@ -14,14 +15,9 @@ export const createPostvalidation = [
     .withMessage("Debe ser un link válido"),
 ];
 
-/*
-export const listPostValidations = [
-  header('authorization').exists(),
-  applyValidations,
+export const findPostValidation = [
+  param("postId").custom(isValidObjectId).withMessage("Debe ser un Id válido"),
 ];
-*/
-
-export const findPostValidation = [param("postId")];
 
 export const updatePostvalidation = [
   body("title")
