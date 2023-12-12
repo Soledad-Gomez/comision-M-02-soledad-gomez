@@ -1,0 +1,25 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  box-align: center;
+  align-items: center;
+}
+
+.label {
+  margin-left: 10px;
+}
+
+.container {
+  flex-basis: 66.6667%;
+  -webkit-box-flex: 0;
+  flex-grow: 0;
+  max-width: 66.6667%;
+}
+
+.img {
+  background-image: url(./paisaje.jpg);
+  flex-basis: 33.3333%;
+  -webkit-box-flex: 0;
+  flex-grow: 0;
+  max-width: 33.3333%;
+}
