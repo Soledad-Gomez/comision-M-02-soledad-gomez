@@ -21,7 +21,7 @@ const commentRouter = Router();
 
 //ruta para crear un comentario
 commentRouter.post(
-  "/",
+  "/:postId",
   authHeader,
   validateToken,
   createCommentValidation,

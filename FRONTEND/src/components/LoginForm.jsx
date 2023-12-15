@@ -90,6 +90,12 @@ export const Login = () => {
               Iniciar Sesión
             </Button>
           </Form.Group>
+
+          <Form.Group className="d-grid gap-2">
+            <Button href="/register" variant="link" type="submit">
+              ¿No tienes una cuenta? Registrate
+            </Button>
+          </Form.Group>
         </Form>
       </div>
     </div>

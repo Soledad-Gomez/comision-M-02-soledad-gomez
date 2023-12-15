@@ -23,10 +23,10 @@ export const ctrlCreatePost = async (req, res) => {
 //controlador para traer todos los posts
 export const ctrlGetAllPost = async (req, res) => {
   try {
-    const allPost = await PostModel.find().populate("comments", [
-      "desc",
-      "author",
-    ]);
+    const allPost = await PostModel.find()
+      .populate("author", ["username", "avatar"])
+      .populate("comments", ["desc", "author"]);
+
     if (allPost.length < 1) return res.sendStatus(204);
 
     res.json(allPost);

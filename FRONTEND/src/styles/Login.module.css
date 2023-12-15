@@ -9,9 +9,27 @@
   margin-left: 10px;
 }
 
+.col2 {
+  display: flex;
+  justify-content: flex-end;
+
+  max-width: 66.666vw;
+  max-height: 100 vh;
+}
+
+.col1 {
+  max-height: 100 vh;
+  max-width: 33.3333%;
+}
+
+.btn {
+  margin-top: 20px;
+}
+
 .container {
-  flex-basis: 66.6667%;
-  -webkit-box-flex: 0;
-  flex-grow: 0;
-  max-width: 66.6667%;
+  background-color: white;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

@@ -1,38 +1,4 @@
-.btn {
-  border: none;
-  border-radius: 32px;
-  padding: 8px 12 px;
-  font-size: 16 px;
-}
-
-.btn-blue {
-  background-color: blue;
-  color: white;
-}
-
-.btn-blue:hover {
-  background-color: darkblue;
-}
-
-.btn-red {
-  background-color: red;
-  color: white;
-}
-
-.btn-red:hover {
-  background-color: darkred;
-}
-
-.btn-green {
-  background-color: green;
-  color: white;
-}
-
-.btn-green:hover {
-  background-color: darkgreen;
-}
-
-.container {
-  background-color: black;
-  color: aliceblue;
+.layout {
+  min-width: 100vw;
+  min-height: 1pp vh;
 }

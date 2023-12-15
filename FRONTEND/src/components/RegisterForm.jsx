@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import styles from "../styles/Register.module.css";
+import styles from "../styles/Login.module.css";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Form from "react-bootstrap/Form";
@@ -118,6 +118,12 @@ export const RegisterForm = () => {
           <Form.Group className="d-grid gap-2">
             <Button variant="dark" size="lg" type="submit">
               Registrarse
+            </Button>
+          </Form.Group>
+
+          <Form.Group className="d-grid gap-2">
+            <Button href="/public/posts" variant="link" type="submit">
+              Ver publicaciones sin registrarme
             </Button>
           </Form.Group>
         </Form>

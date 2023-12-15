@@ -1,8 +1,0 @@
-.container {
-  background-image: url(./paisaje.jpg);
-  width: 33vh;
-  flex-basis: 33.3333%;
-  -webkit-box-flex: 0;
-  flex-grow: 0;
-  max-width: 33.3333%;
-}

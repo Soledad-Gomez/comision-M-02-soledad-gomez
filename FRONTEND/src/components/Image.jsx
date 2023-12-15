@@ -1,10 +1,11 @@
-import { styles } from "../styles/Container.modules.css";
-import paisaje from "../../public/paisaje.jpg";
+import styles from "../styles/LoginImage.module.css";
 
-export const Container = () => {
+export const Image = () => {
   return (
     <div className={styles.container}>
-      <img src="paisaje" alt="" />
+      <div className>
+        <img src="/viajes.jpg" className={styles.container} alt="" />
+      </div>
     </div>
   );
 };

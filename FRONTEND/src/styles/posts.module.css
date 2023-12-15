@@ -1,0 +1,32 @@
+.img {
+  max-width: 160 px;
+  max-height: 250px;
+  object-fit: cover;
+}
+
+.div {
+  margin-left: 3vw;
+  margin-right: 3vw;
+  margin-top: 1vw;
+}
+
+.btn {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.banner {
+  width: 100vw;
+  height: 50vh;
+  position: relative;
+  background-image: url(/imagen.jpg);
+  background-size: cover;
+  padding-top: 2%;
+  padding-bottom: 5%;
+  margin-bottom: 4%;
+}
+
+.cardText {
+  height: 100px;
+  overflow-y: hidden;
+}
