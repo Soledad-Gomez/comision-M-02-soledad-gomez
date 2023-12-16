@@ -48,11 +48,6 @@ export const Navbar = () => {
               </a>
               <ul className="dropdown-menu">
                 <li>
-                  <Link className="dropdown-item" to="/users">
-                    Mis publicaciones
-                  </Link>
-                </li>
-                <li>
                   <a className="dropdown-item" onClick={logout}>
                     Cerrar sesión
                   </a>
