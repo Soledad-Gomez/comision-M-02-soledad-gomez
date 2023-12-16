@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
+import styles from "../styles/navbar.module.css";
 
 export const Navbar = () => {
   const { auth, logout } = useContext(AuthContext);
@@ -69,6 +70,9 @@ export const Navbar = () => {
           </ul>
           <form className="d-flex" role="search">
             <h4>{auth?.user?.username}</h4>
+            <div className={styles.img}>
+              <img src={auth?.user?.avatar} alt="" className={styles.img} />
+            </div>
           </form>
         </div>
       </div>

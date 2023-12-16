@@ -78,9 +78,13 @@ export const PublicPostByIdPage = () => {
               <Accordion.Body>
                 {postList.comments.map((comments) => {
                   return (
-                    <div key={comments._id}>
-                      <p>autor={comments.author}</p>
-                      <p>comentario={comments.desc}</p>
+                    <div
+                      key={comments._id}
+                      className="border border-dark p-2 m-1 rounded"
+                    >
+                      <p>{comments.desc}</p>
+                      <h6>Autor:</h6>
+                      <p>{comments.author}</p>
                     </div>
                   );
                 })}

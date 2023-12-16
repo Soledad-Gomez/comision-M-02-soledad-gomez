@@ -1,70 +1,69 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 import { useContext, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { API_URL } from "../utils/consts";
 
-export const NewPost = (target) => {
-  const [newPost, setNewPost] = useState({
+export const EditPost = (target) => {
+  const params = useParams();
+  const { postId } = useParams();
+  const [updatePost, setupdatePost] = useState({
     title: "",
     desc: "",
     image: "",
   });
 
   const handleChange = ({ target }) => {
-    setNewPost({
-      ...newPost,
+    setupdatePost({
+      ...updatePost,
       [target.name]: target.value,
     });
   };
+  console.log(updatePost);
 
   const { auth } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    fetch(`${API_URL}/posts`, {
-      method: "POST",
+  const handleUpdate = (postId) => {
+    fetch(`${API_URL}/posts/${postId}`, {
+      method: "PATCH",
       headers: {
         Authorization: auth.token,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(newPost),
+      body: JSON.stringify(updatePost),
     }).then((res) => {
-      if (res.status !== 201) {
+      if (res.status !== 200) {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "No se pudo crear!",
+          text: "No se pudo editar!",
         });
+        navigate(`/posts/${postId}`);
       } else {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Tu publicación ha sido creada",
+          title: "Tu publicación ha sido editada",
           showConfirmButton: false,
           timer: 1500,
         });
       }
-
-      setNewPost("");
-      navigate("/posts");
     });
   };
-
+  console.log(postId);
   return (
     <div>
       <div className="d-flex justify-content-center">
-        <Form onSubmit={handleSubmit}>
+        <Form>
           <Form.Group className="mb-3" controlId="title">
             <Form.Label>Título</Form.Label>
             <Form.Control
               type="text"
               name="title"
-              value={newPost.title}
+              value={updatePost.title}
               onChange={handleChange}
             />
             <Form.Text className="text-muted">
@@ -78,7 +77,7 @@ export const NewPost = (target) => {
               as="textarea"
               rows={3}
               name="desc"
-              value={newPost.desc}
+              value={updatePost.desc}
               onChange={handleChange}
             />
           </Form.Group>
@@ -89,7 +88,7 @@ export const NewPost = (target) => {
               type="url"
               placeholder="http://example.com"
               name="image"
-              value={newPost.image}
+              value={updatePost.image}
               onChange={handleChange}
             />
             <Form.Text className="text-muted">
@@ -97,8 +96,14 @@ export const NewPost = (target) => {
             </Form.Text>
           </Form.Group>
           <Form.Group className="d-grid gap-2">
-            <Button variant="dark" type="submit">
-              Publicar
+            <Button
+              className="m-1"
+              variant="dark"
+              onClick={() => {
+                handleUpdate(postId);
+              }}
+            >
+              Editar
             </Button>
           </Form.Group>
         </Form>

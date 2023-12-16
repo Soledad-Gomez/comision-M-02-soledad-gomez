@@ -23,7 +23,7 @@ export const Router = () => {
         <Route path="/posts/newpost" element={<NewPostPage />} />
         <Route path="/posts/:postId" element={<PostByIdPage />} />
         <Route path="/comments/:postId" element={<NewCommentPage />} />
-        <Route path="/posts/editpost" element={<EditPostPage />} />
+        <Route path="/posts/:postId/edit" element={<EditPostPage />} />
         <Route path="/users" element={<Userspage />} />
       </Route>
 

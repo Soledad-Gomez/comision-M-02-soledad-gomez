@@ -85,7 +85,7 @@ export const PostByIdPage = () => {
         <p className={styles.p}>{postList.desc}</p>
       </div>
       <div className="d-flex justify-content-end">
-        <Button href="/posts/editpost" className="m-1" variant="dark">
+        <Button href={`/posts/${postId}/edit`} className="m-1" variant="dark">
           Editar Post
         </Button>
         <Button
@@ -111,9 +111,11 @@ export const PostByIdPage = () => {
                     });
                   } else {
                     Swal.fire({
-                      title: "Deleted!",
-                      text: "Your file has been deleted.",
-                      icon: "success",
+                      position: "top-end",
+                      icon: "Deleted!",
+                      title: "Your post has been deleted",
+                      showConfirmButton: false,
+                      timer: 1500,
                     });
                     navigate("/posts");
                   }
@@ -149,16 +151,9 @@ export const PostByIdPage = () => {
                       key={comments._id}
                       className="border border-dark p-2 m-1 rounded"
                     >
-                      <p>autor={comments.author}</p>
                       <p>comentario={comments.desc}</p>
-                      <div className="d-flex justify-content-end">
-                        <Button className="m-1" variant="dark">
-                          Editar Comentario
-                        </Button>
-                        <Button className="m-1" variant="dark">
-                          Borrar Comentario
-                        </Button>
-                      </div>
+                      <h6>Autor:</h6>
+                      <p>autor={comments.author}</p>
                     </div>
                   );
                 })}

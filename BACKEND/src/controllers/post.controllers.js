@@ -64,7 +64,7 @@ export const ctrlUpdatePostById = async (req, res) => {
       { new: true }
     );
 
-    res.json(updatedPost);
+    res.status(200);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
